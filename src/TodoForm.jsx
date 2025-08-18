@@ -1,21 +1,29 @@
 import { useRef } from "react";
+import { useState } from "react";
 
 function TodoForm({ onAddTodo }) {
+   const [workingTodoTitle, setWorkingTodoTitle] = useState("");
 
-   const todoTitleInput=useRef("");
+   const todoTitleInput=useRef(null);
 //    const todoTitleInput = useRef(null); // null is better than "" for DOM elements
 
-    function handleAddTodo(event){
-        event.preventDefault()
-        //  console.dir(event.target.title.value)
-        // console.dir(event.target.title)
-        const title=event.target.title.value // Get the input value
-        onAddTodo(title); // Call the function passed from parent with the input value
+    // function handleAddTodo(event){
+    //     event.preventDefault()
+    //     //  console.dir(event.target.title.value)
+    //     // console.dir(event.target.title)
+    //     const title=event.target.title.value // Get the input value
+    //     onAddTodo(title); // Call the function passed from parent with the input value
   
-      event.target.title.value = ""; // Clear the input after submission
-      todoTitleInput.current.focus();
+    //   event.target.title.value = ""; // Clear the input after submission
+    //   todoTitleInput.current.focus();
 
-    }
+    // }
+    function handleAddTodo(event) {
+    event.preventDefault();
+    onAddTodo(workingTodoTitle);
+    setWorkingTodoTitle("");  // reset input
+    todoTitleInput.current.focus();
+  }
 
   return (
     <form 
@@ -26,10 +34,12 @@ function TodoForm({ onAddTodo }) {
         id="todoTitle"
         name="title"
         ref={todoTitleInput}
+        value= {workingTodoTitle}
+        onChange={(e) => setWorkingTodoTitle(e.target.value)}//controlled input
        
         
       />
-      <button type="submit">Add Todo</button>
+      <button type="submit" disabled={!workingTodoTitle.trim()} >Add Todo</button>
     </form>
   );
 }
