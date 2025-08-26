@@ -1,10 +1,16 @@
-// Instead of writing props.todo, the todo object is destructured directly in the parameter.
-function TodoListItem({todo}){
-
-
-    return(
-        <li>{todo.title}</li>
-
-    )
-};
-export default TodoListItem;
+function TodoListItem({ todo, onCompleteTodo }) {
+    return (
+      <li>
+        <form>
+          <input
+            type="checkbox"
+            checked={todo.isCompleted}
+            onChange={() => onCompleteTodo(todo.id)}
+          />
+          {todo.title}
+        </form>
+      </li>
+    );
+  }
+  
+  export default TodoListItem;
