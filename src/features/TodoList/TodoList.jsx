@@ -1,7 +1,12 @@
 import TodoListItem from "./TodoListItem";
 
-function TodoList({ todoList,onCompleteTodo}) {
-     const filteredTodoList = todoList.filter((todo) => !todo.isCompleted);
+function TodoList({ todoList, onCompleteTodo, onUpdateTodo, isLoading }) {
+  const filteredTodoList = todoList.filter((todo) => !todo.isCompleted); // hide completed
+
+  if (isLoading) {
+    return <p>Todo list loading...</p>;
+  }
+
   return (
     <>
       {filteredTodoList.length === 0 ? (
@@ -9,7 +14,12 @@ function TodoList({ todoList,onCompleteTodo}) {
       ) : (
         <ul>
           {filteredTodoList.map((todo) => (
-            <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo}  />
+            <TodoListItem
+              key={todo.id}
+              todo={todo}
+              onCompleteTodo={onCompleteTodo}
+              onUpdateTodo={onUpdateTodo}
+            />
           ))}
         </ul>
       )}
